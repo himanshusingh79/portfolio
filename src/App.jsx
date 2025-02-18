@@ -6,6 +6,8 @@ import Technologies from './components/Technologies'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar1 from './components/Navbar1'
 
 const App = () => {
   return (
@@ -15,11 +17,12 @@ const App = () => {
       </div>
       
       <div className="container mx-auto px-8">
-      <Navbar/>
+      {/* <Navbar/> */}
+      <Navbar1/>
       <Hero/>
       <About/>
       <Technologies/>
-      {/* <Experience/> */}
+       {/* <Experience/> */}
       <Projects/>
       <Contact/>
       </div>
