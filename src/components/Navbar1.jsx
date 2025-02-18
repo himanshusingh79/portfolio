@@ -1,41 +1,71 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { LINKS } from "../constants";
 
-
-export default function Navbar() {
+const Navbar1 = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isOpen]);
+
   return (
-    <nav className="bg-gray-900 text-white p-4 shadow-lg">
-      <div className="container mx-auto flex justify-between items-center">
-        <a href="#" className="text-2xl font-bold">
-          MyPortfolio
-        </a>
+    <>
+      {/* Navbar */}
+      <nav className="mb-20 flex items-left justify-between py-6">
+        <div className="flex justify-between items-center px-6 py-4">
+          {/* Logo or Brand Name */}
+          <h1 className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-3xl tracking-tight text-transparent">My PortFolio</h1>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6">
-          <a href="About.jsx" className="hover:text-blue-400">About Me</a>
-          <a href="/Technologies.jsx" className="hover:text-blue-400">Technologies</a>
-          <a href="/contact.jsx" className="hover:text-blue-400">Get In Touch</a>
+          {/* Desktop Menu (Hidden on Mobile) */}
+          <ul className="m-8 flex items-center justify-center gap-4 text-2xl">
+            {LINKS.map(({ id, name }) => (
+              <li key={id}>
+                <a href={`#${id}`} className="hover:text-lime-300 transition">
+                  {name}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {/* Mobile Menu Button (Hidden on Desktop) */}
+          <button
+            onClick={toggleMenu}
+            className="p-2 md:hidden focus:outline-none"
+          >
+            {isOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Only visible when `isOpen` is true) */}
       {isOpen && (
-        <div className="md:hidden flex flex-col mt-4 space-y-4 bg-gray-800 p-4 rounded-lg">
-          <a href="#about" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>About Me</a>
-          <a href="#technologies" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Technologies</a>
-          <a href="#contact" className="hover:text-blue-400" onClick={() => setIsOpen(false)}>Get In Touch</a>
+        <div className="fixed inset-0 bg-black text-white z-40 flex flex-col items-center justify-center md:hidden">
+          <ul className="space-y-6 text-2xl">
+            {LINKS.map(({ id, name }) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  onClick={toggleMenu}
+                  className="text-4xl font-semibold uppercase tracking-wide hover:text-lime-300 transition"
+                >
+                  {name}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-    </nav>
+    </>
   );
-}
+};
+
+export default Navbar1;
