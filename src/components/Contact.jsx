@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 import { CONTACT } from "../constants";
 import { motion } from "motion/react";
-import { FaLinkedin, FaInstagram, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaGithub, FaWhatsapp } from "react-icons/fa";
 
 const Contact = () => {
   // Social media links
   const socialLinks = [
     {
       name: "LinkedIn",
-      url: "https://www.linkedin.com/in/himanshu-singh-526895214/",
+      url: "https://www.linkedin.com/in/yourprofile",
       icon: <FaLinkedin className="h-6 w-6" />
     },
     {
@@ -18,10 +18,21 @@ const Contact = () => {
     },
     {
       name: "GitHub",
-      url: "https://github.com/himanshusingh79",
+      url: "https://github.com/yourusername",
       icon: <FaGithub className="h-6 w-6" />
     }
   ];
+
+  // Format phone number and create WhatsApp link
+  const formatPhoneForWhatsApp = () => {
+    // Remove any non-numeric characters from phone number
+    const numericPhone = CONTACT.phoneNo.replace(/\D/g, '');
+    return numericPhone;
+  };
+
+  const whatsappMessage = "Hello! I found you via your portfolio website.";
+  const encodedMessage = encodeURIComponent(whatsappMessage);
+  const whatsappUrl = `https://wa.me/${formatPhoneForWhatsApp()}?text=${encodedMessage}`;
 
   return (
     <section id="contact">
@@ -62,13 +73,29 @@ const Contact = () => {
           </a>
         </div>
 
-        {/* Social Media Links */}
+        {/* Social Media Links with WhatsApp */}
         <motion.div 
           className="mt-10 flex justify-center gap-8"
           whileInView={{opacity: 1, y: 0}}
           initial={{ opacity: 0, y: 50}}
           transition={{ duration: 0.7}}
         >
+          {/* WhatsApp Button */}
+          <motion.a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center gap-2 text-neutral-400 hover:text-green-500 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0 }}
+          >
+            <FaWhatsapp className="h-6 w-6" />
+            <span className="text-sm">WhatsApp</span>
+          </motion.a>
+
+          {/* Other Social Links */}
           {socialLinks.map((social, index) => (
             <motion.a
               key={social.name}
@@ -79,7 +106,7 @@ const Contact = () => {
               whileHover={{ scale: 1.1 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: (index + 1) * 0.1 }}
             >
               {social.icon}
               <span className="text-sm">{social.name}</span>
@@ -88,7 +115,7 @@ const Contact = () => {
         </motion.div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
