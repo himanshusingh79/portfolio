@@ -9,9 +9,9 @@ export const ABOUT_TEXT = `I am a dedicated and versatile full stack developer w
 
 
 export const LINKS = [
-  { id: "about", name: "about" },
-  { id: "technologies", name: "technologies" },
-  { id: "projects", name: "projects" },
+  { id: "about", name: "About" },
+  { id: "technologies", name: "Technologies" },
+  { id: "projects", name: "Projects" },
   { id: "contact", name: "Contact" },
 ];
 
