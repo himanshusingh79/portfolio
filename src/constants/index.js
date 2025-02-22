@@ -9,7 +9,7 @@ export const ABOUT_TEXT = `I am a dedicated and versatile full stack developer w
 
 
 export const LINKS = [
-  { id: "about", name: "About" },
+  { id: "home", name: "Home" },
   { id: "technologies", name: "Technologies" },
   { id: "projects", name: "Projects" },
   { id: "contact", name: "Contact" },

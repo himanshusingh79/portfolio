@@ -77,7 +77,7 @@ const InquiryModal = ({ isOpen, onClose, onSubmit }) => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="John Doe"
               />
             </div>
@@ -91,7 +91,7 @@ const InquiryModal = ({ isOpen, onClose, onSubmit }) => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="johndoe@example.com"
               />
             </div>
@@ -105,7 +105,7 @@ const InquiryModal = ({ isOpen, onClose, onSubmit }) => {
                 onChange={handleChange}
                 required
                 rows="4"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Please describe your project requirements, timeline, and any specific features you need."
               ></textarea>
             </div>
@@ -117,7 +117,7 @@ const InquiryModal = ({ isOpen, onClose, onSubmit }) => {
                 name="budget"
                 value={formData.budget}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="Under $1,000">Under $1,000</option>
                 <option value="$1,000 - $3,000">$1,000 - $3,000</option>
@@ -148,26 +148,12 @@ const Hero = () => {
   const handleInquirySubmit = async (formData) => {
     try {
       // This is where you would handle the actual form submission
-      // Example API call (replace with your actual endpoint)
-      // const response = await fetch('/api/inquiry', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     ...formData,
-      //     recipient: 'your-email@example.com' // The email where inquiries should be sent
-      //   })
-      // });
-      
-      // if (response.ok) {
       console.log('Form submitted:', formData);
       setSubmitStatus('success');
       setTimeout(() => {
         setIsModalOpen(false);
         setSubmitStatus(null);
       }, 2000);
-      // } else {
-      //   throw new Error('Failed to submit form');
-      // }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
@@ -175,118 +161,126 @@ const Hero = () => {
   };
   
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      {/* Hero Section */}
-      <section className="text-center mb-16">
-        <ColorChangingHeader />
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto"
-        >
-          We bring your ideas to life with custom-built applications that perfectly match your requirements
-        </motion.p>
-        
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setIsModalOpen(true)}
-          className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition duration-300"
-        >
-          Start Your Project
-        </motion.button>
-      </section>
-      
-      {/* Client Types */}
-      <section className="grid md:grid-cols-3 gap-8 mb-16">
-        <motion.div 
-          whileHover={{ scale: 1.05 }}
-          className="bg-black p-6 rounded-xl shadow-md"
-        >
-          <FaGraduationCap className="text-5xl text-blue-500 mb-4" />
-          <h3 className="text-xl font-semibold mb-2">College Students</h3>
-          <p>Stand out with professional academic projects and boost your portfolio</p>
-        </motion.div>
-        
-        <motion.div 
-          whileHover={{ scale: 1.05 }}
-          className="bg-black p-6 rounded-xl shadow-md"
-        >
-          <FaUser className="text-5xl text-purple-500 mb-4" />
-          <h3 className="text-xl font-semibold mb-2">Individuals</h3>
-          <p>Bring your personal ideas to life with custom development solutions</p>
-        </motion.div>
-        
-        <motion.div 
-          whileHover={{ scale: 1.05 }}
-          className="bg-black p-6 rounded-xl shadow-md"
-        >
-          <FaBriefcase className="text-5xl text-green-500 mb-4" />
-          <h3 className="text-xl font-semibold mb-2">Professionals</h3>
-          <p>Enterprise-grade applications to streamline your business operations</p>
-        </motion.div>
-      </section>
 
-      {/* Key Benefits */}
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="flex flex-col items-center text-center p-4">
-            <div className="bg-yellow-100 p-4 rounded-full mb-4">
-              <BsCurrencyDollar className="text-4xl text-yellow-600" />
-            </div>
-            <h3 className="text-lg font-semibold mb-1">Budget Friendly</h3>
-            <p className="text-gray-600">Competitive rates for students and startups</p>
-          </div>
-          
-          <div className="flex flex-col items-center text-center p-4">
-            <div className="bg-blue-100 p-4 rounded-full mb-4">
-              <FaRocket className="text-4xl text-blue-600" />
-            </div>
-            <h3 className="text-lg font-semibold mb-1">Fast Delivery</h3>
-            <p className="text-gray-600">Quick turnaround without compromising quality</p>
-          </div>
-          
-          <div className="flex flex-col items-center text-center p-4">
-            <div className="bg-green-100 p-4 rounded-full mb-4">
-              <FaCode className="text-4xl text-green-600" />
-            </div>
-            <h3 className="text-lg font-semibold mb-1">Quality Code</h3>
-            <p className="text-gray-600">Clean, maintainable, and well-documented</p>
-          </div>
-          
-          <div className="flex flex-col items-center text-center p-4">
-            <div className="bg-purple-100 p-4 rounded-full mb-4">
-              <FaHeadset className="text-4xl text-purple-600" />
-            </div>
-            <h3 className="text-lg font-semibold mb-1">Ongoing Support</h3>
-            <p className="text-gray-600">Free demo sessions and after-project support</p>
-          </div>
-        </div>
-      </section>
+    <section id='home'>
+        <div className="w-full">
+      {/* Add a spacer div to account for the fixed navbar */}
+      <div className="h-20"></div>
       
-      {/* Inquiry Modal */}
-      <InquiryModal 
-        isOpen={isModalOpen} 
-        onClose={() => {
-          setIsModalOpen(false);
-          setSubmitStatus(null);
-        }}
-        onSubmit={handleInquirySubmit}
-      />
-      
-      {/* Status Toast Notification */}
-      {submitStatus && (
-        <div className={`fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg ${
-          submitStatus === 'success' ? 'bg-green-500' : 'bg-red-500'
-        } text-white font-medium`}>
-          {submitStatus === 'success' ? 
-            'Thanks! Your inquiry has been submitted.' : 
-            'Error submitting form. Please try again.'}
-        </div>
-      )}
+      <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
+        {/* Hero Section */}
+        <section className="text-center mb-16">
+          <ColorChangingHeader />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto"
+          >
+            We bring your ideas to life with custom-built applications that perfectly match your requirements
+          </motion.p>
+          
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsModalOpen(true)}
+            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition duration-300"
+          >
+            Start Your Project
+          </motion.button>
+        </section>
+        
+        {/* Client Types */}
+        <section className="grid md:grid-cols-3 gap-8 mb-16">
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="bg-black p-6 rounded-xl shadow-md"
+          >
+            <FaGraduationCap className="text-5xl text-blue-500 mb-4" />
+            <h3 className="text-xl font-semibold mb-2">College Students</h3>
+            <p>Stand out with professional academic projects and boost your portfolio</p>
+          </motion.div>
+          
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="bg-black p-6 rounded-xl shadow-md"
+          >
+            <FaUser className="text-5xl text-purple-500 mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Individuals</h3>
+            <p>Bring your personal ideas to life with custom development solutions</p>
+          </motion.div>
+          
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="bg-black p-6 rounded-xl shadow-md"
+          >
+            <FaBriefcase className="text-5xl text-green-500 mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Professionals</h3>
+            <p>Enterprise-grade applications to streamline your business operations</p>
+          </motion.div>
+        </section>
+
+        {/* Key Benefits */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="flex flex-col items-center text-center p-4">
+              <div className="bg-yellow-100 p-4 rounded-full mb-4">
+                <BsCurrencyDollar className="text-4xl text-yellow-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Budget Friendly</h3>
+              <p className="text-gray-600">Competitive rates for students and startups</p>
+            </div>
+            
+            <div className="flex flex-col items-center text-center p-4">
+              <div className="bg-blue-100 p-4 rounded-full mb-4">
+                <FaRocket className="text-4xl text-blue-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Fast Delivery</h3>
+              <p className="text-gray-600">Quick turnaround without compromising quality</p>
+            </div>
+            
+            <div className="flex flex-col items-center text-center p-4">
+              <div className="bg-green-100 p-4 rounded-full mb-4">
+                <FaCode className="text-4xl text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Quality Code</h3>
+              <p className="text-gray-600">Clean, maintainable, and well-documented</p>
+            </div>
+            
+            <div className="flex flex-col items-center text-center p-4">
+              <div className="bg-purple-100 p-4 rounded-full mb-4">
+                <FaHeadset className="text-4xl text-purple-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Ongoing Support</h3>
+              <p className="text-gray-600">Free demo sessions and after-project support</p>
+            </div>
+          </div>
+        </section>
+        
+        {/* Inquiry Modal */}
+        <InquiryModal 
+          isOpen={isModalOpen} 
+          onClose={() => {
+            setIsModalOpen(false);
+            setSubmitStatus(null);
+          }}
+          onSubmit={handleInquirySubmit}
+        />
+        
+        {/* Status Toast Notification */}
+        {submitStatus && (
+          <div className={`fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg ${
+            submitStatus === 'success' ? 'bg-green-500' : 'bg-red-500'
+          } text-white font-medium`}>
+            {submitStatus === 'success' ? 
+              'Thanks! Your inquiry has been submitted.' : 
+              'Error submitting form. Please try again.'}
+          </div>
+        )}
+      </div>
     </div>
+    </section>
   );
 };
 

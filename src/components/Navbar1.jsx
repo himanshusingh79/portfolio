@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { FaBars, FaTimes, FaArrowUp } from "react-icons/fa";
+import React, { useEffect, useState, useRef } from "react";
+import { FaBars, FaTimes, FaArrowUp, FaWhatsapp } from "react-icons/fa";
 import { LINKS } from "../constants";
 
 const Navbar1 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const menuRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -13,13 +14,22 @@ const Navbar1 = () => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
     
-    // Cleanup function to reset overflow when component unmounts
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
     return () => {
       document.body.style.overflow = "auto";
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen]);
   
-  // Show/hide scroll button based on scroll position
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
@@ -31,7 +41,6 @@ const Navbar1 = () => {
     
     window.addEventListener("scroll", handleScroll);
     
-    // Cleanup scroll listener
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -48,16 +57,18 @@ const Navbar1 = () => {
     });
   };
 
+  const whatsappUrl = "https://wa.me/yourphonenumber?text=Hello!%20I%20found%20you%20via%20your%20portfolio%20website.";
+
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 bg-transparent">
         <div className="flex justify-between items-center px-6 py-4">
-          {/* Logo or Brand Name */}
-          <h1 className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-3xl tracking-tight text-transparent font-bold">
-            My Portfolio
-          </h1>
+          <a href="#home" className="hover:opacity-80 transition">
+            <h1 className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-3xl tracking-tight text-transparent font-bold">
+              My Portfolio
+            </h1>
+          </a>
 
-          {/* Desktop Menu */}
           <ul className="hidden md:flex items-center gap-6 text-lg">
             {LINKS && LINKS.map(({ id, name }) => (
               <li key={id}>
@@ -68,7 +79,6 @@ const Navbar1 = () => {
             ))}
           </ul>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
             className="md:hidden p-2 focus:outline-none text-white"
@@ -78,9 +88,9 @@ const Navbar1 = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isOpen && (
           <div
+            ref={menuRef}
             className="fixed inset-0 bg-black bg-opacity-90 text-white flex flex-col items-center justify-center md:hidden"
             style={{ zIndex: 49 }}
           >
@@ -101,16 +111,26 @@ const Navbar1 = () => {
         )}
       </nav>
 
-      {/* Scroll to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 p-3 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 text-white shadow-lg transition-all duration-300 z-50 ${
-          showScrollButton ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none"
-        }`}
-        aria-label="Scroll to top"
-      >
-        <FaArrowUp className="h-5 w-5" />
-      </button>
+      <div className="fixed bottom-6 right-6 flex flex-col items-end gap-4 z-50">
+      <a
+  href={whatsappUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="p-3 rounded-full bg-green-500 text-white shadow-lg transition-all duration-300 hover:bg-green-600 flex items-center justify-center md:gap-2 w-14 h-14 md:w-auto md:px-4"
+  aria-label="WhatsApp"
+>
+  <FaWhatsapp className="h-8 w-8 md:h-6 md:w-6" />
+  <span className="hidden md:inline text-base font-medium">WhatsApp</span>
+</a>
+
+        <button
+          onClick={scrollToTop}
+          className={`p-3 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 text-white shadow-lg transition-all duration-300 md:w-12 md:h-12 flex items-center justify-center ${showScrollButton ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none"}`}
+          aria-label="Scroll to top"
+        >
+          <FaArrowUp className="h-5 w-5" />
+        </button>
+      </div>
     </>
   );
 };

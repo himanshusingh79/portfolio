@@ -19,7 +19,7 @@ const App = () => {
         <main className="font-light text-white antialiased selection:bg-lime-300 selection:text-black">
           <Navbar1/>
           <Hero/>
-          <About/>
+          {/* <About/> */}
           <Technologies/>
           <Projects/>
           <Contact/>
