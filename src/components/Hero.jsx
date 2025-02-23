@@ -1,9 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { FaGraduationCap, FaUser, FaBriefcase, FaRocket, FaCode, FaHeadset } from 'react-icons/fa';
-import { BsCurrencyDollar } from 'react-icons/bs';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GraduationCap, User, Briefcase, Rocket, Code, Headphones, DollarSign } from 'lucide-react';
 
-// Color changing header component
+// Greeting component that shows initially
+const Greeting = ({ onComplete }) => {
+  useEffect(() => {
+    const timer = setTimeout(onComplete, 2500); // Transition after 2.5 seconds
+    return () => clearTimeout(timer);
+  }, [onComplete]);
+
+  return (
+    <motion.div 
+      className="h-screen w-full flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 1.2, opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center text-white"
+      >
+        <motion.h1 
+          className="text-5xl md:text-7xl font-bold mb-4"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        >
+          Welcome
+        </motion.h1>
+        <motion.p 
+          className="text-xl md:text-2xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          Let's build something amazing together
+        </motion.p>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// ColorChangingHeader component
 const ColorChangingHeader = () => {
   const [colorIndex, setColorIndex] = useState(0);
   const colors = ["text-blue-600", "text-purple-600", "text-teal-600", "text-rose-600", "text-amber-600"];
@@ -28,7 +69,7 @@ const ColorChangingHeader = () => {
   );
 };
 
-// Inquiry form modal component
+// InquiryModal component
 const InquiryModal = ({ isOpen, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -142,12 +183,12 @@ const InquiryModal = ({ isOpen, onClose, onSubmit }) => {
 
 // Main Hero component
 const Hero = () => {
+  const [showGreeting, setShowGreeting] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   
   const handleInquirySubmit = async (formData) => {
     try {
-      // This is where you would handle the actual form submission
       console.log('Form submitted:', formData);
       setSubmitStatus('success');
       setTimeout(() => {
@@ -161,126 +202,145 @@ const Hero = () => {
   };
   
   return (
+    <AnimatePresence mode="wait">
+      {showGreeting ? (
+        <Greeting key="greeting" onComplete={() => setShowGreeting(false)} />
+      ) : (
+        <motion.div
+          key="hero"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <section id="home">
+            <div className="w-full">
+              <div className="h-20"></div>
+              <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
+                <section className="text-center mb-16">
+                  <ColorChangingHeader />
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto"
+                  >
+                    We bring your ideas to life with custom-built applications that perfectly match your requirements
+                  </motion.p>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsModalOpen(true)}
+                    className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition duration-300"
+                  >
+                    Start Your Project
+                  </motion.button>
+                </section>
+                
+                <motion.section 
+                  className="grid md:grid-cols-3 gap-8 mb-16"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.2
+                      }
+                    }
+                  }}
+                >
+                  {[
+                    { Icon: GraduationCap, title: "College Students", text: "Stand out with professional academic projects and boost your portfolio", color: "blue" },
+                    { Icon: User, title: "Individuals", text: "Bring your personal ideas to life with custom development solutions", color: "purple" },
+                    { Icon: Briefcase, title: "Professionals", text: "Enterprise-grade applications to streamline your business operations", color: "green" }
+                  ].map((item, index) => (
+                    <motion.div 
+                      key={index}
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 }
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      className="bg-black p-6 rounded-xl shadow-md"
+                    >
+                      <item.Icon className={`w-12 h-12 text-${item.color}-500 mb-4`} />
+                      <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                      <p>{item.text}</p>
+                    </motion.div>
+                  ))}
+                </motion.section>
 
-    <section id='home'>
-        <div className="w-full">
-      {/* Add a spacer div to account for the fixed navbar */}
-      <div className="h-20"></div>
-      
-      <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
-        {/* Hero Section */}
-        <section className="text-center mb-16">
-          <ColorChangingHeader />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto"
-          >
-            We bring your ideas to life with custom-built applications that perfectly match your requirements
-          </motion.p>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsModalOpen(true)}
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition duration-300"
-          >
-            Start Your Project
-          </motion.button>
-        </section>
-        
-        {/* Client Types */}
-        <section className="grid md:grid-cols-3 gap-8 mb-16">
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="bg-black p-6 rounded-xl shadow-md"
-          >
-            <FaGraduationCap className="text-5xl text-blue-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">College Students</h3>
-            <p>Stand out with professional academic projects and boost your portfolio</p>
-          </motion.div>
-          
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="bg-black p-6 rounded-xl shadow-md"
-          >
-            <FaUser className="text-5xl text-purple-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Individuals</h3>
-            <p>Bring your personal ideas to life with custom development solutions</p>
-          </motion.div>
-          
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="bg-black p-6 rounded-xl shadow-md"
-          >
-            <FaBriefcase className="text-5xl text-green-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Professionals</h3>
-            <p>Enterprise-grade applications to streamline your business operations</p>
-          </motion.div>
-        </section>
-
-        {/* Key Benefits */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="flex flex-col items-center text-center p-4">
-              <div className="bg-yellow-100 p-4 rounded-full mb-4">
-                <BsCurrencyDollar className="text-4xl text-yellow-600" />
+                <motion.section 
+                  className="mb-16"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                  <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="flex flex-col items-center text-center p-4">
+                      <div className="bg-yellow-100 p-4 rounded-full mb-4">
+                        <DollarSign className="w-8 h-8 text-yellow-600" />
+                      </div>
+                      <h3 className="text-lg font-semibold mb-1">Budget Friendly</h3>
+                      <p className="text-gray-600">Competitive rates for students and startups</p>
+                    </div>
+                    
+                    <div className="flex flex-col items-center text-center p-4">
+                      <div className="bg-blue-100 p-4 rounded-full mb-4">
+                        <Rocket className="w-8 h-8 text-blue-600" />
+                      </div>
+                      <h3 className="text-lg font-semibold mb-1">Fast Delivery</h3>
+                      <p className="text-gray-600">Quick turnaround without compromising quality</p>
+                    </div>
+                    
+                    <div className="flex flex-col items-center text-center p-4">
+                      <div className="bg-green-100 p-4 rounded-full mb-4">
+                        <Code className="w-8 h-8 text-green-600" />
+                      </div>
+                      <h3 className="text-lg font-semibold mb-1">Quality Code</h3>
+                      <p className="text-gray-600">Clean, maintainable, and well-documented</p>
+                    </div>
+                    
+                    <div className="flex flex-col items-center text-center p-4">
+                      <div className="bg-purple-100 p-4 rounded-full mb-4">
+                        <Headphones className="w-8 h-8 text-purple-600" />
+                      </div>
+                      <h3 className="text-lg font-semibold mb-1">Ongoing Support</h3>
+                      <p className="text-gray-600">Free demo sessions and after-project support</p>
+                    </div>
+                  </div>
+                </motion.section>
+                
+                <InquiryModal 
+                  isOpen={isModalOpen} 
+                  onClose={() => {
+                    setIsModalOpen(false);
+                    setSubmitStatus(null);
+                  }}
+                  onSubmit={handleInquirySubmit}
+                />
+                
+                {submitStatus && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    className={`fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg ${
+                      submitStatus === 'success' ? 'bg-green-500' : 'bg-red-500'
+                    } text-white font-medium`}
+                  >
+                    {submitStatus === 'success' ? 
+                      'Thanks! Your inquiry has been submitted.' : 
+                      'Error submitting form. Please try again.'}
+                  </motion.div>
+                )}
               </div>
-              <h3 className="text-lg font-semibold mb-1">Budget Friendly</h3>
-              <p className="text-gray-600">Competitive rates for students and startups</p>
             </div>
-            
-            <div className="flex flex-col items-center text-center p-4">
-              <div className="bg-blue-100 p-4 rounded-full mb-4">
-                <FaRocket className="text-4xl text-blue-600" />
-              </div>
-              <h3 className="text-lg font-semibold mb-1">Fast Delivery</h3>
-              <p className="text-gray-600">Quick turnaround without compromising quality</p>
-            </div>
-            
-            <div className="flex flex-col items-center text-center p-4">
-              <div className="bg-green-100 p-4 rounded-full mb-4">
-                <FaCode className="text-4xl text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold mb-1">Quality Code</h3>
-              <p className="text-gray-600">Clean, maintainable, and well-documented</p>
-            </div>
-            
-            <div className="flex flex-col items-center text-center p-4">
-              <div className="bg-purple-100 p-4 rounded-full mb-4">
-                <FaHeadset className="text-4xl text-purple-600" />
-              </div>
-              <h3 className="text-lg font-semibold mb-1">Ongoing Support</h3>
-              <p className="text-gray-600">Free demo sessions and after-project support</p>
-            </div>
-          </div>
-        </section>
-        
-        {/* Inquiry Modal */}
-        <InquiryModal 
-          isOpen={isModalOpen} 
-          onClose={() => {
-            setIsModalOpen(false);
-            setSubmitStatus(null);
-          }}
-          onSubmit={handleInquirySubmit}
-        />
-        
-        {/* Status Toast Notification */}
-        {submitStatus && (
-          <div className={`fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg ${
-            submitStatus === 'success' ? 'bg-green-500' : 'bg-red-500'
-          } text-white font-medium`}>
-            {submitStatus === 'success' ? 
-              'Thanks! Your inquiry has been submitted.' : 
-              'Error submitting form. Please try again.'}
-          </div>
-        )}
-      </div>
-    </div>
-    </section>
+          </section>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

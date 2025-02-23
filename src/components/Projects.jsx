@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 const Projects = () => {
   return (
-    <section id="projects" className="pt-24">
+    <section id="projects" className="pt-10">
       <div className="border-b border-neutral-900 pb-12 px-6">
         <motion.h2 
         whileInView={{opacity: 1, y: 0}}
