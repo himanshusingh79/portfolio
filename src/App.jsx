@@ -5,21 +5,29 @@ import Technologies from "./components/Technologies";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Navbar from "./components/Navbar";
-
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  const callBack =(delay)=>{
+    setTimeout(() => {
       setShowSplash(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+    }, delay);
+  }
+  const FrontSide = () => (
+    <div className="flex flex-col items-center">
+  
+      <h2 className="text-xl font-semibold">React Developer</h2>
+    </div>
+  );
+  
+  const BackSide = () => (
+    <div className="text-center">
+      <p className="text-lg px-4">Building modern UIs with React.js</p>
+    </div>
+  );
   return (
     <>
-      {showSplash && <AnimatedSplash />}
+      {showSplash && <AnimatedSplash  callBack={callBack}/>}
       <div 
         style={{ opacity: showSplash ? 0 : 1, transition: 'opacity 0.5s' }}
         className="overflow-x-hidden text-neutral-300 antialiased selection:bg-cyan-300 selection:text-cyan-900"
@@ -31,7 +39,6 @@ const App = () => {
         <main className="font-light text-white antialiased selection:bg-lime-300 selection:text-black">
           <Navbar />
           <Hero />
-          {/* <About/> */}
           <Technologies />
           <Projects />
           <Contact />

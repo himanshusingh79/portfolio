@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GraduationCap, User, Briefcase, Rocket, Code, Headphones, DollarSign } from 'lucide-react';
+import student from '../assets/projects/student.jpg'
+import individuals from '../assets/projects/individuals.jpg'
+import professional from '../assets/projects/professional.jpg'
+
 
 // Greeting component that shows initially
 const Greeting = ({ onComplete }) => {
@@ -8,6 +12,7 @@ const Greeting = ({ onComplete }) => {
     const timer = setTimeout(onComplete, 2500); // Transition after 2.5 seconds
     return () => clearTimeout(timer);
   }, [onComplete]);
+
 
   return (
     <motion.div 
@@ -238,37 +243,71 @@ const Hero = () => {
                 </section>
                 
                 <motion.section 
-                  className="grid md:grid-cols-3 gap-8 mb-16"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.2
-                      }
-                    }
-                  }}
-                >
-                  {[
-                    { Icon: GraduationCap, title: "College Students", text: "Stand out with professional academic projects and boost your portfolio", color: "blue" },
-                    { Icon: User, title: "Individuals", text: "Bring your personal ideas to life with custom development solutions", color: "purple" },
-                    { Icon: Briefcase, title: "Professionals", text: "Enterprise-grade applications to streamline your business operations", color: "green" }
-                  ].map((item, index) => (
-                    <motion.div 
-                      key={index}
-                      variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0 }
-                      }}
-                      whileHover={{ scale: 1.05 }}
-                      className="bg-black p-6 rounded-xl shadow-md"
-                    >
-                      <item.Icon className={`w-12 h-12 text-${item.color}-500 mb-4`} />
-                      <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                      <p>{item.text}</p>
-                    </motion.div>
-                  ))}
-                </motion.section>
+  className="grid md:grid-cols-3 gap-8 mb-16"
+  initial="hidden"
+  animate="visible"
+  variants={{
+    visible: {
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  }}
+>
+  {[
+    { 
+      Icon: GraduationCap, 
+      title: "College Students", 
+      text: "Stand out with professional academic projects and boost your portfolio", 
+      color: "blue",
+      image: student // Replace with your actual image path
+    },
+    { 
+      Icon: User, 
+      title: "Individuals", 
+      text: "Bring your personal ideas to life with custom development solutions", 
+      color: "purple",
+      image: individuals // Replace with your actual image path
+    },
+    { 
+      Icon: Briefcase, 
+      title: "Professionals", 
+      text: "Enterprise-grade applications to streamline your business operations", 
+      color: "green",
+      image: professional // Replace with your actual image path
+    }
+  ].map((item, index) => (
+    <motion.div 
+      key={index}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 }
+      }}
+      className="h-64 perspective"
+    >
+      <div className="relative w-full h-full transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180">
+        {/* Front of card (Image only) */}
+        <div className="absolute w-full h-full backface-hidden rounded-xl overflow-hidden">
+        <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+          <img 
+            src={item.image} 
+            alt={item.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Back of card (Details with icon) */}
+        <div className="absolute w-full h-full backface-hidden bg-black p-6 rounded-xl shadow-md rotate-y-180">
+          <div className="flex flex-col h-full justify-center">
+            <item.Icon className={`w-12 h-12 text-${item.color}-500 mb-4`} />
+            <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  ))}
+</motion.section>
 
                 <motion.section 
                   className="mb-16"

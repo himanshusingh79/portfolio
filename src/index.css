@@ -7,3 +7,41 @@
 :root {
   font-family: "Inter", sans-serif;
 }
+
+/* Add these classes to your global CSS file */
+.perspective {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Add these CSS classes to your global CSS file */
+.perspective {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.transform-style {
+  transform-style: preserve-3d;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.hover\:rotate-y-180:hover {
+  transform: rotateY(180deg);
+}
